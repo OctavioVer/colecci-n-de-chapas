@@ -1,47 +1,80 @@
-# Colección de Chapas
+# Vitrina — Colección de Chapas
 
-App de celular para coleccionistas: tener la colección inventariada y online, y conectar con otros coleccionistas.
+App de celular para coleccionistas: tener la colección inventariada, contada y ordenada, y más adelante conectar con otros coleccionistas.
 
-> Documento de idea y arquitectura propuesta. Todavía no hay código: esto es para revisar y corregir entre los socios antes de empezar.
+> "Vitrina" es un nombre provisorio. Se cambia en `app.json` (`name`) y en los textos de la app.
 
-## El problema
+![Pantallas de la app](docs/capturas.png)
 
-Los coleccionistas necesitan tener la colección ordenada. Hoy cada uno lo resuelve como puede: con un programa propio (por ejemplo, en Visual Basic) o con planillas de Excel hechas a mano.
+## Estado actual: etapa 1 (inventario)
 
-## Lo principal de la app
+Ya funciona, guardando todo en el teléfono:
 
-1. **Inventario permanente y online:** tu colección actualizada y disponible desde donde estés.
-2. **Contacto entre coleccionistas:** publicar, vender, comprar e intercambiar, con reputación, garantías y ranking.
+- **Onboarding completo:** presentación de 4 pantallas con ilustraciones propias, configuración inicial (tu nombre y qué coleccionás) y una guía de primeros pasos en la pantalla de inicio que lleva a probar cada función. Además, cada pantalla muestra un consejo la primera vez que se entra. La presentación se puede volver a ver desde Perfil.
+- **Colecciones a medida:** plantillas para chapas, latas, biromes o una colección desde cero. Los campos se pueden agregar, quitar, renombrar y reordenar, con 4 tipos de dato: texto, lista de opciones, número y sí/no.
+- **Inventario con fotos:** carga rápida desde la cámara o la galería, con “Guardar y otra” para cargar varias seguidas. Los campos de texto sugieren los valores que ya usaste (así no aparecen "Argentina" y "argentina" como si fueran distintos).
+- **Conteo y repetidas:** cada pieza tiene su cantidad de ejemplares. Si cargás una que ya tenés, la app te avisa y te ofrece sumarla como repetida.
+- **Búsquedas cruzadas:** un buscador que busca en todos los datos, sin importar tildes ni mayúsculas, más filtros que se combinan entre sí (país + bebida + rango de años + solo repetidas). Se puede ordenar por cualquier campo y ver la colección en grilla o en lista.
+- **Conteos:** totales, distintas, repetidas y porcentaje con foto, más barras por cada campo. Tocando una barra se abre la colección filtrada.
+- **Excel, al estilo Banco Roela:**
+  - Planilla modelo `.xlsx` con las columnas de tu colección, listas desplegables y una hoja de instrucciones.
+  - Importación de cualquier Excel o CSV: detecta encabezados aunque haya títulos arriba, acomoda cada columna con el campo que corresponde y crea campos nuevos para las columnas que no coinciden, así no se pierde nada. Antes de importar muestra cómo va a quedar.
+  - Exportación de la colección entera a Excel.
+- **Diseño:** sistema de diseño propio (colores, tipografía Plus Jakarta Sans, componentes), modo claro y oscuro, ícono propio y chapitas dibujadas en vectores que toman el color cargado cuando la pieza no tiene foto.
+- **Comunidad:** una pestaña que adelanta lo que trae la etapa 2.
 
-## Funciones
+## Cómo probarla
 
-- **Inventariar:** cargar cada pieza con fotos y datos.
-- **Contar:** totales por categoría, país, marca, etc.
-- **Ordenar y buscar:** búsquedas cruzadas y filtros. Referencia: [crowncaps.info](https://crowncaps.info/).
-- **Conectar:** con otros coleccionistas.
-- **Que se pueda adaptar:** cada colección tiene sus propios datos. No se registra lo mismo de una chapita que de un calefón, una lata o una birome.
-- **Importar desde Excel, al estilo Banco Roela:** una planilla modelo que el usuario completa y sube, y la app carga los datos sola. También tiene que aceptar los Excel que la gente ya tiene armados y adaptarlos.
+Hace falta [Node.js](https://nodejs.org) 20 o más nuevo.
 
-## Arquitectura propuesta
+```bash
+npm install
+npx expo start
+```
 
-| Parte | Propuesta | Por qué |
-|---|---|---|
-| App de celular | **React Native + Expo** | Un solo código sirve para Android y iPhone, y también podría tener versión web. |
-| Base de datos online | **Supabase** | Incluye la base de datos, las cuentas de usuario, el guardado de fotos y el chat. Tiene un plan gratis para arrancar. |
-| Datos que cambian según la colección | **Campos personalizados** | Cada tipo de colección define sus campos (para chapas: país, marca, color, texto, año, estado). Además, plantillas listas: chapas, latas, biromes, etc. |
-| Importar Excel | **Planilla modelo + asistente** | La app genera una planilla modelo según los campos de tu colección. Si alguien sube su propio Excel, un asistente le pregunta a qué campo corresponde cada columna. |
+- **En el celular:** instalá **Expo Go** (App Store o Google Play) y escaneá el código QR que aparece en la terminal. La compu y el celular tienen que estar en la misma red wifi.
+- **En la compu:** apretá `w` en la terminal para abrirla en el navegador. En la web las fotos se guardan dentro del navegador; está pensada para mostrarla, no para usarla todos los días.
 
-## Etapas
+Para probar la importación hay un ejemplo en [`docs/ejemplo-coleccion.csv`](docs/ejemplo-coleccion.csv).
 
-1. **Inventario (primera versión):** cuentas de usuario, colecciones con campos propios, carga con fotos, conteos, búsqueda y filtros, e importar y exportar Excel. Ya con esto la app sirve y se puede usar.
-2. **Comunidad:** perfiles públicos, catálogo compartido estilo crowncaps, publicaciones para vender o intercambiar, chat, reputación y ranking.
-3. **Garantías y pagos:** por ejemplo con MercadoPago. Es la etapa más compleja y tiene temas legales, así que conviene dejarla para después de validar lo anterior.
+Chequeos para desarrollar:
+
+```bash
+npm test            # tests de búsqueda, conteos e importación/exportación de Excel
+npm run typecheck
+npm run lint
+```
+
+## Cómo está hecha
+
+- **React Native + Expo (SDK 57)** con Expo Router: un solo código para Android, iPhone y web.
+- **Zustand + AsyncStorage** para guardar los datos en el dispositivo. Las fotos se copian a la carpeta de la app.
+- **Excel sin librerías pesadas:** la planilla se genera con un escritor `.xlsx` propio (`src/lib/excel/xlsx-writer.ts`) y se lee con `read-excel-file`.
+
+```
+src/
+  app/              pantallas (cada archivo es una ruta)
+    (tabs)/         Inicio, Colección, Comunidad, Perfil
+    onboarding.tsx  presentación + configuración inicial
+    item/           cargar, editar y ver una pieza
+    collections/    nueva colección, editar campos, importar, conteos
+  components/       componentes de la app y sistema de diseño (ui/)
+  domain/           modelo de datos, plantillas, búsqueda y conteos
+  lib/excel/        leer, mapear y generar planillas
+  store/            estado y guardado local
+  theme/            colores, tipografía y espaciados
+```
+
+## Próximos pasos
+
+1. **Sincronización online (cierra la etapa 1):** usar Supabase para cuentas de usuario, base de datos y fotos en la nube, y así tener la colección en cualquier dispositivo. Para conectarla hace falta crear una cuenta gratuita en [supabase.com](https://supabase.com) y pasar las claves del proyecto.
+2. **Etapa 2, comunidad:** perfiles públicos, publicar repetidas, intercambios, compra y venta, reputación y ranking, y catálogo compartido.
+3. **Etapa 3, garantías y pagos:** por ejemplo con MercadoPago.
 
 ## Pendiente de definir
 
-- [ ] **El Visual Basic actual:** ¿es un Excel con macros o una base de Access? Sirve para armar los campos de "chapas" y como primera importación real.
-- [ ] **Sin conexión:** ¿hay que poder cargar y consultar la colección sin señal (por ejemplo, en una feria de canje)?
-- [ ] **Catálogo compartido:** ¿cada uno maneja solo su colección, o además hay una biblioteca pública donde una misma pieza figura una sola vez y cada coleccionista marca "la tengo"?
-- [ ] **Compra y venta:** en la etapa 2, ¿alcanza con contactar al otro y calificarlo después, o los pagos tienen que hacerse dentro de la app desde el principio?
-- [ ] **Nombre de la app e idioma:** ¿solo español y Argentina al principio?
-- [ ] **Herramientas:** confirmar Expo + Supabase.
+- [ ] **El Visual Basic actual:** ¿es un Excel con macros o una base de Access? Sirve para ajustar la plantilla de chapas y probar una importación real.
+- [ ] **Sin conexión:** ¿hay que poder cargar sin señal (por ejemplo, en una feria de canje)? Hoy funciona así; hay que decidir si se mantiene al pasar a online.
+- [ ] **Catálogo compartido:** ¿una biblioteca pública donde cada pieza figura una sola vez y cada coleccionista marca "la tengo"?
+- [ ] **Compra y venta:** ¿alcanza con contactar y calificar, o los pagos tienen que hacerse dentro de la app?
+- [ ] **Nombre definitivo de la app** e idioma (¿solo español al principio?).

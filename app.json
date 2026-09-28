@@ -1,0 +1,57 @@
+{
+  "expo": {
+    "name": "Vitrina",
+    "slug": "vitrina",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "vitrina",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "icon": "./assets/images/icon.png",
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#F6F4F0",
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "backgroundImage": "./assets/images/android-icon-background.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "single",
+      "favicon": "./assets/images/favicon.png",
+      "name": "Vitrina"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#F6F4F0",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 96,
+          "dark": {
+            "backgroundColor": "#0F1013"
+          }
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Vitrina usa tus fotos para mostrar las piezas de tu colección.",
+          "cameraPermission": "Vitrina usa la cámara para sacarle fotos a las piezas de tu colección.",
+          "microphonePermission": false
+        }
+      ],
+      "expo-sharing",
+      "expo-font"
+    ],
+    "experiments": {
+      "reactCompiler": true
+    },
+    "description": "Inventario para coleccionistas: chapas, latas, biromes y más."
+  }
+}

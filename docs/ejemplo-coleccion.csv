@@ -1,0 +1,27 @@
+Mi colección de chapas (ejemplo)
+;;;;;;
+Descripción;Marca;PAIS;Bebida;Año;Serie;Cant.;Color de fondo
+Quilmes Cristal;Quilmes;Argentina;Cerveza;1998;A-01;3;Azul
+Quilmes Bock;Quilmes;Argentina;Cerveza;2004;A-02;1;Negro
+Brahma Chopp;Brahma;Brasil;Cerveza;2001;B-11;2;Rojo
+Coca-Cola clásica;Coca-Cola;Argentina;Gaseosa;1995;G-01;4;Rojo
+Coca-Cola Zero;Coca-Cola;México;Gaseosa;2012;G-02;1;Negro
+Pilsen;Pilsen;Uruguay;Cerveza;1989;U-03;1;Amarillo
+Patricia;Patricia;Uruguay;Cerveza;1992;U-04;2;Dorado
+Heineken;Heineken;Países Bajos;Cerveza;2010;E-07;1;Verde
+Stella Artois;Stella Artois;Bélgica;Cerveza;2008;E-08;1;Blanco
+Corona Extra;Corona;México;Cerveza;2015;M-01;5;Blanco
+Paceña;Paceña;Bolivia;Cerveza;2003;BO-1;1;Azul
+Cusqueña;Cusqueña;Perú;Cerveza;2006;PE-2;1;Dorado
+Pepsi;Pepsi;Argentina;Gaseosa;1999;G-05;2;Azul
+Paso de los Toros;Paso de los Toros;Argentina;Gaseosa;1997;G-06;1;Amarillo
+Andes Origen;Andes;Argentina;Cerveza;2017;A-09;1;Rojo
+Isenbeck;Isenbeck;Argentina;Cerveza;2002;A-10;1;Verde
+Schneider;Schneider;Argentina;Cerveza;2000;A-11;2;Rojo
+Budweiser;Budweiser;Estados Unidos;Cerveza;2011;US-1;1;Rojo
+Guinness;Guinness;Irlanda;Cerveza;2009;IE-1;1;Negro
+Sprite;Sprite;Argentina;Gaseosa;2005;G-07;1;Verde
+Club Colombia;Club Colombia;Colombia;Cerveza;2014;CO-1;1;Dorado
+Polar;Polar;Venezuela;Cerveza;1996;VE-1;1;Azul
+Imperial;Imperial;Argentina;Cerveza;2016;A-12;1;Amarillo
+Norte;Norte;Argentina;Cerveza;1994;A-13;3;Rojo
