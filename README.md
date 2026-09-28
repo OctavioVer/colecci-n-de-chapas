@@ -35,6 +35,14 @@ npx expo start
 - **En el celular:** instalá **Expo Go** (App Store o Google Play) y escaneá el código QR que aparece en la terminal. La compu y el celular tienen que estar en la misma red wifi.
 - **En la compu:** apretá `w` en la terminal para abrirla en el navegador. En la web las fotos se guardan dentro del navegador; está pensada para mostrarla, no para usarla todos los días.
 
+### Publicarla en Vercel
+
+El repo ya trae `vercel.json`: Vercel compila la versión web (`npx expo export --platform web`) y la publica desde `dist/`.
+
+1. Entrá a [vercel.com/new](https://vercel.com/new) con tu cuenta de GitHub.
+2. Importá el repositorio `colecci-n-de-chapas` y tocá **Deploy** sin cambiar nada.
+3. Cada vez que se suba un cambio al repo, Vercel publica la versión nueva sola.
+
 Para probar la importación hay un ejemplo en [`docs/ejemplo-coleccion.csv`](docs/ejemplo-coleccion.csv).
 
 Chequeos para desarrollar:
